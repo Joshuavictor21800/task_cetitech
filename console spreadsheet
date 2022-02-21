@@ -1,0 +1,65 @@
+#include <stdio.h>
+int calculate(int a,int b,char op) {
+ switch(op) {
+ case '+' : return a + b;
+ case '-' : return a - b;
+ case '*' : return a * b;
+ case '/' : return a/b; }
+ return 0; }
+int main() {
+ int row,col;
+ printf("Enter the number of rows : ");
+ scanf("%d",&row);
+ printf("Enter the number of Columns : ");
+ scanf("%d",&col);
+ int spreadSheet[row][col];
+ char temp[1000],oper[1000];
+ for (int i=0;i<row;i++) {
+ for (int j=0;j<col;j++) {
+ printf("Entering data for cell %d%d\n",i,j);
+ printf("Press 1 to omit cell\nPress 2 to enter value\nPress 3 to enter formula\n");
+ int choice;
+ scanf("%d",&choice);
+ switch(choice) {
+ case 1 : spreadSheet[i][j] = 0;break;
+ case 2 : scanf("%d",&spreadSheet[i][j]);break;
+ case 3 :
+ scanf("%s",temp);
+ int k = 1;
+ int s = 0,pos=0,opPos=0;
+ int value[100];
+ while (temp[k] != '\0') {
+ if (temp[k]-'A'>=0 && temp[k]-'A'<=26) {
+ int row1 = temp[k]-'A';k++;
+ int col1 = temp[k]-'A';k++;
+ value[pos++] = spreadSheet[row1][col1];
+ }
+ else if (temp[k]-'0'>=0 && temp[k]-'0'<=9) {
+ int num = 0;
+ while(temp[k]-'0'>=0 && temp[k]-'0'<=9){
+ num = (num*10) + temp[k]-'0';
+ k++;
+ }
+ value[pos++] = num;
+ }
+ else {
+ oper[opPos++] = temp[k];k++; }
+ }
+ k=0;
+ for (int g=0;g<pos;g++) {
+
+ s = calculate(value[g],value[g+1],oper[k]);
+ k++;
+ } break;} } }
+
+for (int i=0;i<row;i++) {
+ for (int j=0;j<col;j++) {
+ if(spreadSheet[i][j] == -1)
+ printf("#NAN");
+ else if (spreadSheet[i][j] == -2)
+ printf("#ERROR");
+ else if (spreadSheet[i][j] != 0)
+ printf("%d",spreadSheet[i][j]);
+ printf("\t"); }
+ printf("\n"); }
+return 0; }
