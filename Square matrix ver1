@@ -1,0 +1,7 @@
+void matmul(double a1[][4096], double a2[][4096], double s[][4096]){
+int i, j, k;         
+for (i = 0; i < 4096; i++) {             
+for (j = 0; j < 4096; j++) {      
+s[i][j] = 0;            
+for (k = 0; k < 4096; k++)  
+res[i][j] += a1[i][k] * a2[k][j];  }}} 
